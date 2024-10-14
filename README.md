@@ -23,11 +23,15 @@
 # ひとまず作成したがブラッシュアップ必要
 
 - テーマ決め
+  documents/THEME.md
 - 要件定義
+  documents/REQUIREMENT_DEFINITION.md
 - 画面遷移図
 - ワイヤーフレーム
 - テーブル定義書/ER 図
+  https://www.figma.com/design/Q9HhtGHjvg4b2qsnfFTqM5/%E3%83%96%E3%83%83%E3%82%AF%E3%83%9E%E3%83%BC%E3%82%AF%E7%AE%A1%E7%90%86%E3%82%A2%E3%83%97%E3%83%AA?node-id=0-1&m=dev&t=hIxy4STCMU7ML8h4-1
 - コア機能
+  documents/CORE.md
 
 # 未着手
 
