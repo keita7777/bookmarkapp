@@ -1,25 +1,3 @@
-# オリジナルプロダクトの進め方
-
-オリジナルプロダクト作成に向けての進め方になります。
-
-## ゴール
-
-オリジナルプロダクトの作成をどのようにしてやっていくのか、具体的には「課題に対して、要件定義から設計・実装・運用までの一連のサイクルを行い、課題そのものを自ら解決でき」、結果として「事業をドライブすることができる」を目指します。
-
-## スケジュール
-
-| 週（目安） | 内容                                                 |
-| ---------- | ---------------------------------------------------- |
-| 2W         | [テーマ決め](/documents/THEME.md)                    |
-| 1W         | [要件定義](/documents/REQUIREMENT_DEFINITION.md)     |
-| 3D         | [業務フロー](/documents/BUSINESS_FLOW.md)            |
-| 3D         | [画面遷移図](/documents/TRANSITION_DIAGRAM.md)       |
-| 1W         | [ワイヤーフレーム](/documents//WIREFRAME.md)         |
-| 3D         | [テーブル定義書/ER 図](/documents/TABLE.md)          |
-| 3D         | [システム構成図](/documents/SYSTEM_CONFIGURATION.md) |
-| 4W         | [コア機能](/documents/CORE.md)                       |
-| 3W         | インフラ                                             |
-
 # ひとまず作成したがブラッシュアップ必要
 
 - [テーマ決め](/documents/THEME.md)
@@ -34,3 +12,49 @@
 # 未着手
 
 - 業務フロー
+
+# 使用技術
+
+## プログラミング言語
+
+- TypeScript
+
+## フレームワーク
+
+- Next.js
+
+## ライブラリ
+
+### 認証
+
+- Auth.js
+- bcryptjs
+
+### フォーム管理
+
+- React Hook From
+
+### バリデーション
+
+- zod
+
+### ORM
+
+- Prisma
+
+### UI 全般
+
+- Tailwind
+- react-icons
+
+## データベース
+
+- Supabase
+
+## インフラ
+
+- Vercel
+
+## バージョン管理
+
+- Git/GitHub
