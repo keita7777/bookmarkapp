@@ -17,7 +17,7 @@ const FolderItem = ({ folder }: { folder: Folder }) => {
         <GrBottomCorner size={30} className="mb-2 text-white rotate-90" />
       )}
       <div
-        className={` rounded min-h-10 flex justify-between items-center flex-1 relative ${
+        className={` rounded min-h-10 flex justify-between items-center flex-1 relative hover:bg-blue-100 ${
           folderPath === id ? "bg-blue-100" : "bg-white"
         }`}
       >
