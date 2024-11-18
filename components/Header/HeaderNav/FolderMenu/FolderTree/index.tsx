@@ -3,7 +3,14 @@
 import { FoldersDummyData } from "@/DummtData/types/folderType";
 import FolderItem from "./FolderItem";
 
-const FolderTree = ({ folders, parentId = null }: { folders: FoldersDummyData; parentId?: string | null }) => {
+type Props = {
+  folders: FoldersDummyData;
+  parentId?: string | null;
+  openFolders: Record<string, boolean>;
+  toggleFolder: (folderId: string) => void;
+};
+
+const FolderTree = ({ folders, parentId = null, openFolders, toggleFolder }: Props) => {
   return (
     folders
       // フォルダデータの親フォルダ（parent_folder）が受け取ったparentIdと一致するフォルダをフィルター
@@ -11,11 +18,20 @@ const FolderTree = ({ folders, parentId = null }: { folders: FoldersDummyData; p
       .filter((folder) => folder.parent_relation.parent_folder === parentId)
       .map((folder) => (
         <li key={folder.id} className="flex flex-col gap-5">
-          <FolderItem folder={folder} />
+          <FolderItem
+            folder={folder}
+            isSubFolderVisible={!!openFolders[folder.id]}
+            toggleFolder={() => toggleFolder(folder.id)}
+          />
           {/* フォルダに子フォルダがある場合、再帰的にFolderTreeを呼び出す */}
-          {folder.parent_relation.hasChild && (
+          {folder.parent_relation.hasChild && openFolders[folder.id] && (
             <ul className="ml-6 flex flex-col gap-5">
-              <FolderTree folders={folders} parentId={folder.id} />
+              <FolderTree
+                folders={folders}
+                parentId={folder.id}
+                openFolders={openFolders}
+                toggleFolder={toggleFolder}
+              />
             </ul>
           )}
         </li>

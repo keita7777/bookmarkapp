@@ -6,7 +6,13 @@ import { GrBottomCorner } from "react-icons/gr";
 import FolderOpenButton from "./FolderOpenButton";
 import FolderSettingButton from "./FolderSettingButton";
 
-const FolderItem = ({ folder }: { folder: Folder }) => {
+type Props = {
+  folder: Folder;
+  isSubFolderVisible: boolean;
+  toggleFolder: () => void;
+};
+
+const FolderItem = ({ folder, isSubFolderVisible, toggleFolder }: Props) => {
   // URLからIDを取得、folder.idと一致する場合にスタイルを変更する
   const path = usePathname();
   const folderPath = path.split("/")[1];
@@ -24,7 +30,9 @@ const FolderItem = ({ folder }: { folder: Folder }) => {
       >
         <div className="flex items-center flex-1 h-full">
           {/* 子フォルダがある場合は開閉ボタンを表示 */}
-          {folder.parent_relation.hasChild && <FolderOpenButton />}
+          {folder.parent_relation.hasChild && (
+            <FolderOpenButton isSubFolderVisible={isSubFolderVisible} toggleFolder={toggleFolder} />
+          )}
           <Link
             className={`flex-1 flex items-center h-full w-full py-1 ${folder.parent_relation.hasChild || "px-4"}`}
             href={`/${folder.id}`}

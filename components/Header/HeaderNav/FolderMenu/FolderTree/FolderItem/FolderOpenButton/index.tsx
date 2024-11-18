@@ -1,9 +1,14 @@
 import { IoIosArrowDown } from "react-icons/io";
 
-const FolderOpenButton = () => {
+type Props = {
+  isSubFolderVisible: boolean;
+  toggleFolder: () => void;
+};
+
+const FolderOpenButton = ({ isSubFolderVisible, toggleFolder }: Props) => {
   return (
-    <button className="px-2 block h-full">
-      <IoIosArrowDown />
+    <button onClick={toggleFolder} className="px-2 block h-full">
+      <IoIosArrowDown className={`${isSubFolderVisible ? "rotate-180" : ""}`} />
     </button>
   );
 };
