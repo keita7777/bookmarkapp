@@ -5,7 +5,7 @@ export const foldersDummyData = [
     name: "ミニチュア",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-1",
       parent_folder: null,
       hasChild: true,
@@ -18,7 +18,7 @@ export const foldersDummyData = [
     name: "ミニチュア作家",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-2",
       parent_folder: "folder-1",
       hasChild: true,
@@ -31,7 +31,7 @@ export const foldersDummyData = [
     name: "国内",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-3",
       parent_folder: "folder-2",
       hasChild: false,
@@ -44,7 +44,7 @@ export const foldersDummyData = [
     name: "Root Folder 2",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-4",
       parent_folder: null,
       hasChild: true,
@@ -57,7 +57,7 @@ export const foldersDummyData = [
     name: "Sub Folder 2.1",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-5",
       parent_folder: "folder-4",
       hasChild: false,
@@ -70,7 +70,7 @@ export const foldersDummyData = [
     name: "Root Folder 3",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-6",
       parent_folder: null,
       hasChild: true,
@@ -83,7 +83,7 @@ export const foldersDummyData = [
     name: "Sub Folder 3.1",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-7",
       parent_folder: "folder-6",
       hasChild: true,
@@ -96,7 +96,7 @@ export const foldersDummyData = [
     name: "Sub Folder 3.2",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-8",
       parent_folder: "folder-7",
       hasChild: false,
@@ -109,7 +109,7 @@ export const foldersDummyData = [
     name: "Root Folder 4",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-9",
       parent_folder: null,
       hasChild: true,
@@ -122,7 +122,7 @@ export const foldersDummyData = [
     name: "Sub Folder 4.1",
     created_at: new Date(),
     updated_at: new Date(),
-    folderRelations: {
+    parent_relation: {
       id: "folder-10",
       parent_folder: "folder-9",
       hasChild: false,
@@ -131,7 +131,7 @@ export const foldersDummyData = [
   },
 ];
 
-export const folderRelationsDummyData = [
+export const parent_relationDummyData = [
   {
     id: "folder-1",
     parent_folder: null,

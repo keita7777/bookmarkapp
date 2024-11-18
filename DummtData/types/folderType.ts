@@ -20,7 +20,7 @@ export interface Folder {
   name: string; // フォルダ名
   created_at: Date; // 作成日時
   updated_at: Date; // 更新日時
-  folderRelations: FolderRelation; // 関連するFolderRelation情報
+  parent_relation: FolderRelation; // 関連するFolderRelation情報
 }
 
 // ダミーデータ用配列型
