@@ -1,13 +1,13 @@
-import { foldersDummyData } from "@/DummtData/folderData";
-import { FoldersDummyData } from "@/DummtData/types/folderType";
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa";
 import FolderTree from "./FolderTree";
+import { FoldersDummyData } from "@/DummtData/types/folderType";
 
-// フロント構築時のテストデータ
-const folders = foldersDummyData as FoldersDummyData;
+type Props = {
+  folders: FoldersDummyData;
+};
 
-const FolderMenu = () => {
+const FolderMenu = ({ folders }: Props) => {
   return (
     <div className="w-full p-2 sm:p-0">
       <div className="bg-white rounded-md mb-4 border-2 border-black">
