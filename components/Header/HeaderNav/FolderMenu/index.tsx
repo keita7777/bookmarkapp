@@ -1,3 +1,5 @@
+// ヘッダーのフォルダメニュー
+
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa";
 import FolderTree from "./FolderTree";

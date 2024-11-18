@@ -7,29 +7,32 @@ import FolderOpenButton from "./FolderOpenButton";
 import FolderSettingButton from "./FolderSettingButton";
 
 const FolderItem = ({ folder }: { folder: Folder }) => {
+  // URLからIDを取得、folder.idと一致する場合にスタイルを変更する
   const path = usePathname();
   const folderPath = path.split("/")[1];
-  const { id, name } = folder;
 
   return (
     <div className="flex items-center">
+      {/* 親フォルダがある場合アイコンを表示 */}
       {folder.parent_relation.parent_folder !== null && (
         <GrBottomCorner size={30} className="mb-2 text-white rotate-90" />
       )}
       <div
         className={` rounded min-h-10 flex justify-between items-center flex-1 relative hover:bg-blue-100 ${
-          folderPath === id ? "bg-blue-100" : "bg-white"
+          folderPath === folder.id ? "bg-blue-100" : "bg-white"
         }`}
       >
         <div className="flex items-center flex-1 h-full">
+          {/* 子フォルダがある場合は開閉ボタンを表示 */}
           {folder.parent_relation.hasChild && <FolderOpenButton />}
           <Link
             className={`flex-1 flex items-center h-full w-full py-1 ${folder.parent_relation.hasChild || "px-4"}`}
             href={`/${folder.id}`}
           >
-            {name}
+            {folder.name}
           </Link>
         </div>
+        {/* フォルダの設定ボタン（フォルダ編集/フォルダ削除メニューの表示） */}
         <FolderSettingButton />
       </div>
     </div>
