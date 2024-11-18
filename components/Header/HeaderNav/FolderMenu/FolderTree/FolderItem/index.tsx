@@ -17,14 +17,14 @@ const FolderItem = ({ folder }: { folder: Folder }) => {
         <GrBottomCorner size={30} className="mb-2 text-white rotate-90" />
       )}
       <div
-        className={` rounded h-10 flex justify-between items-center flex-1 relative ${
+        className={` rounded min-h-10 flex justify-between items-center flex-1 relative ${
           folderPath === id ? "bg-blue-100" : "bg-white"
         }`}
       >
         <div className="flex items-center flex-1 h-full">
           {folder.parent_relation.hasChild && <FolderOpenButton />}
           <Link
-            className={`flex-1 flex items-center h-full w-full ${folder.parent_relation.hasChild || "px-4"}`}
+            className={`flex-1 flex items-center h-full w-full py-1 ${folder.parent_relation.hasChild || "px-4"}`}
             href={`/${folder.id}`}
           >
             {name}
