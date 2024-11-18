@@ -1,33 +1,48 @@
 // ヘッダーメニューの切り替えボタン、メニュー
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FaFolder, FaRegUserCircle, FaSearch } from "react-icons/fa";
-import { IoMenu } from "react-icons/io5";
 import FolderMenu from "./FolderMenu";
 import SearchMenu from "./SearchMenu";
 import ProfileMenu from "./ProfileMenu";
-import Link from "next/link";
 
 const HeaderNav = () => {
   // ボタンクリックで表示するメニュー切替
   const [switchMenu, setSwitchMenu] = useState("folder");
 
-  // スマホ表示であるかを判定
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const updateIsMobile = () => {
-      // 画面幅768px未満の場合SP表示と判定
-      setIsMobile(window.innerWidth < 768);
-    };
+  // SP表示であるかを判定
+  const [isSp, setIsSp] = useState(false);
 
-    updateIsMobile();
-    window.addEventListener("resize", updateIsMobile);
-    return () => window.removeEventListener("resize", updateIsMobile);
-  }, []);
+  // SP表示でメニューを非表示にした後、PC表示に切り替えるとメニューが表示されない不具合の解消
+  // useCallbackでメモ化し不要な再生成を防ぐ
+  // 現在の画面幅を判定し、768px未満の場合にtrue、それ以外の場合にfalseを設定
+  const updateIsSp = useCallback(() => {
+    // 現在の表示がSP表示であるか判定
+    const isCurrentlySp = window.innerWidth < 768;
+
+    // SP表示に切り替わった場合、switchMenuを空にする
+    if (isCurrentlySp && !isSp) {
+      setSwitchMenu(""); // SP表示に切り替えたときメニューを非表示
+    }
+
+    // PC表示に切り替えた際にswitchMenuが空なら"folder"に設定
+    if (!isCurrentlySp && switchMenu === "") {
+      setSwitchMenu("folder");
+    }
+
+    setIsSp(isCurrentlySp);
+  }, [isSp, switchMenu]);
+
+  // コンポーネントマウント時、およびリサイズ時に実行
+  useEffect(() => {
+    window.addEventListener("resize", updateIsSp);
+    updateIsSp();
+    return () => window.removeEventListener("resize", updateIsSp);
+  }, [updateIsSp]);
 
   const handleSwitch = (id: string) => {
-    if (isMobile && switchMenu === id) {
+    if (isSp && switchMenu === id) {
       // SP表示かつ同じメニューのボタンをクリックした場合
       // クリックしたメニューが既に開いている場合は閉じる（トグル）
       setSwitchMenu("");
