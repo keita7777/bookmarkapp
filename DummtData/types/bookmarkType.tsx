@@ -1,4 +1,4 @@
-export type bookmarkType = {
+export type bookmarkDummyType = {
   id: string;
   title: string;
   url: string;
