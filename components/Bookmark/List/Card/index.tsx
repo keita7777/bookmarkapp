@@ -4,10 +4,9 @@ import { bookmarkDummyType } from "@/DummtData/types/bookmarkType";
 
 type Props = {
   bookmark: bookmarkDummyType;
-  folderId?: string;
 };
 
-const BookmarkCard = ({ bookmark, folderId }: Props) => {
+const BookmarkCard = ({ bookmark }: Props) => {
   return (
     <li className="flex flex-col border border-black rounded-md p-3 relative gap-4">
       <div className="flex flex-col xl:flex-row">
