@@ -1,6 +1,5 @@
 // import { useOpenMenu } from "@/context/OpenMenuContext";
 import { BsThreeDots } from "react-icons/bs";
-import FolderSettingMenu from "./FolderSettingMenu";
 import { Dispatch, SetStateAction } from "react";
 
 type Props = {
