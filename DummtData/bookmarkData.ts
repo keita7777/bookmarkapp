@@ -3,8 +3,7 @@ export const bookmarkDummyData = [
     id: "1",
     title: "立体画家・はがいちよう | Works | Works Gallery",
     url: "https://ichiyoh-haga.com/works.html",
-    description:
-      "立体画家・はがいちよう（芳賀一洋）の作品を集めたギャラリーページです。",
+    description: "立体画家・はがいちよう（芳賀一洋）の作品を集めたギャラリーページです。",
     memo: "はがいちようさんのHP",
     folder_id: "1",
   },
@@ -28,8 +27,7 @@ export const bookmarkDummyData = [
   },
   {
     id: "4",
-    title:
-      "William Robertson Fine Scale Miniatures artist, speaker, teacher, tools",
+    title: "William Robertson Fine Scale Miniatures artist, speaker, teacher, tools",
     url: "https://www.robertsonminiatures.com/",
     description:
       "William (Wm.) R. Robertson fine scale miniatures artist, speaker, craft teacher, museum designer, antique tool historian and collector. Uses 17th, 18th, 19th and 20th century tools to create his miniature art. Works in 1/12th scale, 1&quot; to 1 foot, built the dollhouse Twin Manors.",
@@ -52,8 +50,7 @@ export const bookmarkDummyData = [
     id: "6",
     title: "大理石風塗装をしてみました。 - ケイ･ホビー プラモショップ ブログ",
     url: "https://k-hobby.com/plamo/blog/plamo_tech/20190722/",
-    description:
-      "こんにちわ、こんばんわ。 ケイ・ホビー プラモショップです。 大事に使ってた少しお高めのイヤホン",
+    description: "こんにちわ、こんばんわ。 ケイ・ホビー プラモショップです。 大事に使ってた少しお高めのイヤホン",
     memo: "大理石風塗装のやりかた",
     folder_id: "1",
   },

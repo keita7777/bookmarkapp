@@ -5,6 +5,7 @@ type Props = {
   folderId?: string;
 };
 
+// folderIdのpropsはデータフェッチで使用する予定
 const BookmarkList = ({ folderId }: Props) => {
   const bookmarks = bookmarkDummyData;
 
