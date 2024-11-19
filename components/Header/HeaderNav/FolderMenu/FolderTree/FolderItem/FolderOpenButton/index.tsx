@@ -7,7 +7,7 @@ type Props = {
 
 const FolderOpenButton = ({ isSubFolderVisible, toggleFolder }: Props) => {
   return (
-    <button onClick={toggleFolder} className="px-2 block h-full">
+    <button onClick={toggleFolder} className="px-2">
       <IoIosArrowDown className={`${isSubFolderVisible ? "rotate-180" : ""}`} />
     </button>
   );

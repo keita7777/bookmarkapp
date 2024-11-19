@@ -28,17 +28,17 @@ const FolderItem = ({ folder, isSubFolderVisible, toggleFolder }: Props) => {
         <GrBottomCorner size={30} className="mb-2 text-white rotate-90" />
       )}
       <div
-        className={` rounded min-h-10 flex justify-between items-center flex-1  hover:bg-blue-100 ${
+        className={` rounded flex justify-between items-stretch flex-1  hover:bg-blue-100 ${
           folderPath === folder.id ? "bg-blue-100" : "bg-white"
         }`}
       >
-        <div className="flex items-center flex-1 h-full">
+        <div className="flex items-stretch flex-1">
           {/* 子フォルダがある場合は開閉ボタンを表示 */}
           {folder.parent_relation.hasChild && (
             <FolderOpenButton isSubFolderVisible={isSubFolderVisible} toggleFolder={toggleFolder} />
           )}
           <Link
-            className={`flex-1 flex items-center h-full w-full py-1 ${folder.parent_relation.hasChild || "px-4"}`}
+            className={`flex-1 flex items-center w-full py-2 ${folder.parent_relation.hasChild || "px-4"}`}
             href={`/${folder.id}`}
           >
             {folder.name}

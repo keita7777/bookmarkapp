@@ -15,7 +15,7 @@ const FolderSettingButton = ({ id, openMenuId, setOpenMenuId }: Props) => {
   };
   return (
     <>
-      <button className="px-2 block h-full folder-setting-button" onClick={handleMenuToggle}>
+      <button className="px-2 folder-setting-button" onClick={handleMenuToggle}>
         <BsThreeDots />
       </button>
     </>
