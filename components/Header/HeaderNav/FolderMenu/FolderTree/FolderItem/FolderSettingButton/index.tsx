@@ -1,13 +1,15 @@
-import { useOpenMenu } from "@/context/OpenMenuContext";
+// import { useOpenMenu } from "@/context/OpenMenuContext";
 import { BsThreeDots } from "react-icons/bs";
 import FolderSettingMenu from "./FolderSettingMenu";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   id: string | null;
+  openMenuId: string | null;
+  setOpenMenuId: Dispatch<SetStateAction<string | null>>;
 };
 
-const FolderSettingButton = ({ id }: Props) => {
-  const { openMenuId, setOpenMenuId } = useOpenMenu();
+const FolderSettingButton = ({ id, openMenuId, setOpenMenuId }: Props) => {
   const handleMenuToggle = () => {
     setOpenMenuId(openMenuId === id ? null : id);
   };
@@ -16,7 +18,6 @@ const FolderSettingButton = ({ id }: Props) => {
       <button className="px-2 block h-full folder-setting-button" onClick={handleMenuToggle}>
         <BsThreeDots />
       </button>
-      {openMenuId === id && <FolderSettingMenu id={id} />}
     </>
   );
 };

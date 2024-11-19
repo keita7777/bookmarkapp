@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { GrBottomCorner } from "react-icons/gr";
 import FolderOpenButton from "./FolderOpenButton";
 import FolderSettingButton from "./FolderSettingButton";
+import { useOpenMenu } from "@/context/OpenMenuContext";
+import FolderSettingMenu from "./FolderSettingButton/FolderSettingMenu";
 
 type Props = {
   folder: Folder;
@@ -17,14 +19,16 @@ const FolderItem = ({ folder, isSubFolderVisible, toggleFolder }: Props) => {
   const path = usePathname();
   const folderPath = path.split("/")[1];
 
+  const { openMenuId, setOpenMenuId } = useOpenMenu();
+
   return (
-    <div className="flex items-center">
+    <div className="flex items-center relative">
       {/* 親フォルダがある場合アイコンを表示 */}
       {folder.parent_relation.parent_folder !== null && (
         <GrBottomCorner size={30} className="mb-2 text-white rotate-90" />
       )}
       <div
-        className={` rounded min-h-10 flex justify-between items-center flex-1 relative hover:bg-blue-100 ${
+        className={` rounded min-h-10 flex justify-between items-center flex-1  hover:bg-blue-100 ${
           folderPath === folder.id ? "bg-blue-100" : "bg-white"
         }`}
       >
@@ -41,8 +45,9 @@ const FolderItem = ({ folder, isSubFolderVisible, toggleFolder }: Props) => {
           </Link>
         </div>
         {/* フォルダの設定ボタン（フォルダ編集/フォルダ削除メニューの表示） */}
-        <FolderSettingButton id={folder.id} />
+        <FolderSettingButton id={folder.id} openMenuId={openMenuId} setOpenMenuId={setOpenMenuId} />
       </div>
+      {openMenuId === folder.id && <FolderSettingMenu id={folder.id} />}
     </div>
   );
 };
