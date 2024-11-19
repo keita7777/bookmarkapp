@@ -16,7 +16,7 @@ const SettingButton = ({ id }: Props) => {
   return (
     <>
       <button className="px-2 block h-full setting-button" onClick={handleMenuToggle}>
-        <BsThreeDots />
+        <BsThreeDots className="text-2xl" />
       </button>
       {openMenuId === id && <SettingMenu id={id} />}
     </>
