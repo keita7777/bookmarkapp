@@ -41,7 +41,7 @@ const FolderItem = ({ folder, isSubFolderVisible, toggleFolder }: Props) => {
           </Link>
         </div>
         {/* フォルダの設定ボタン（フォルダ編集/フォルダ削除メニューの表示） */}
-        <FolderSettingButton />
+        <FolderSettingButton id={folder.id} />
       </div>
     </div>
   );
