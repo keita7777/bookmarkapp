@@ -8,6 +8,7 @@ import { bookmarkDummyType } from "@/DummtData/types/bookmarkType";
 import { FoldersDummyData } from "@/DummtData/types/folderType";
 import { useRouter } from "next/navigation";
 import { FieldValues, useForm } from "react-hook-form";
+import { useState } from "react";
 
 type Props = {
   urlData?: {
@@ -30,6 +31,11 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
     formState: { errors },
   } = useForm();
 
+  // フォルダ階層
+  const [folder_level1, setFolder_level1] = useState<string | null>(null);
+  const [folder_level2, setFolder_level2] = useState<string | null>(null);
+  const [folder_level3, setFolder_level3] = useState<string | null>(null);
+
   // キャンセルボタンクリック時の処理
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -38,7 +44,7 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
   };
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    console.log(data, folder_level1, folder_level2, folder_level3);
   };
 
   return (
@@ -68,6 +74,94 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
             {...register("description")}
           />
         </div>
+      </div>
+
+      <div className="flex gap-4 p-6 border border-black rounded-md">
+        <div className="flex flex-col gap-2 w-1/3">
+          <label htmlFor="" className="text-xl font-bold">
+            第1階層
+          </label>
+          <select
+            name=""
+            id=""
+            className="border border-black rounded-md p-2"
+            defaultValue={""}
+            onChange={(e) => {
+              setFolder_level1(e.target.value);
+              setFolder_level2(null);
+              setFolder_level3(null);
+            }}
+          >
+            <option value="" disabled>
+              フォルダを選択してください
+            </option>
+            {folderData
+              // 第1階層のフォルダを抽出
+              .filter((item) => item.parent_relation.level === "ONE")
+              .map((folder) => (
+                <option key={folder.id} value={folder.id}>
+                  {folder.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        {/* 第1階層のフォルダが選択されている、かつ選択されたフォルダに子フォルダが存在する場合に第2階層のメニューを表示 */}
+        {folder_level1 && folderData.filter((item) => item.id === folder_level1)[0].parent_relation.hasChild ? (
+          <div className="flex flex-col gap-2 w-1/3">
+            <label htmlFor="" className="text-xl font-bold">
+              第2階層
+            </label>
+            <select
+              name=""
+              id=""
+              className="border border-black rounded-md p-2"
+              onChange={(e) => {
+                setFolder_level2(e.target.value);
+                setFolder_level3(null);
+              }}
+            >
+              <option disabled value="">
+                フォルダを選択してください
+              </option>
+              <option value="">設定しない</option>
+              {folderData
+                // 第1階層のフォルダの子フォルダを抽出
+                .filter((item) => item.parent_relation.parent_folder === folder_level1)
+                .map((folder) => (
+                  <option key={folder.id} value={folder.id}>
+                    {folder.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+        ) : null}
+        {/* 第2階層のフォルダが選択されている、かつ選択されたフォルダに子フォルダが存在する場合に第3階層のメニューを表示 */}
+        {folder_level2 && folderData.filter((item) => item.id === folder_level2)[0].parent_relation.hasChild ? (
+          <div className="flex flex-col gap-2 w-1/3">
+            <label htmlFor="" className="text-xl font-bold">
+              第3階層
+            </label>
+            <select
+              name=""
+              id=""
+              className="border border-black rounded-md p-2"
+              onChange={(e) => setFolder_level3(e.target.value)}
+            >
+              <option disabled value="">
+                フォルダを選択してください
+              </option>
+              <option value="">設定しない</option>
+              {folderData
+                // 第2階層のフォルダの子フォルダを抽出
+                .filter((item) => item.parent_relation.parent_folder === folder_level2)
+                .map((folder) => (
+                  <option key={folder.id} value={folder.id}>
+                    {folder.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+        ) : null}
       </div>
 
       <div className="flex flex-col gap-2">
