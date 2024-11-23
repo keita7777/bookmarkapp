@@ -40,13 +40,13 @@ const BookmarkForm = ({ folderData, bookmarkData }: Props) => {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-8 px-4 pt-12 pb-4 max-w-7xl mx-auto">
       <UrlSubmit url={url} setUrl={setUrl} setUrlData={handleSetUrl} setIsUrlSubmit={setIsUrlSubmit} />
       {/* urlが存在する場合のみBookmarkSubmitコンポーネントを表示 */}
       {isUrlSubmit && (
         <BookmarkSubmit key={bookmarkKey} urlData={urlData} folderData={folderData} bookmarkData={bookmarkData} />
       )}
-    </>
+    </div>
   );
 };
 export default BookmarkForm;

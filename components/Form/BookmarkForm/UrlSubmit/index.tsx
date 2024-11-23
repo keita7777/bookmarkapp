@@ -26,7 +26,7 @@ const UrlSubmit = ({ url, setUrl, setUrlData, setIsUrlSubmit }: Props) => {
   };
 
   return (
-    <form onSubmit={handleUrlSubmit} className="bg-white flex gap-4">
+    <form onSubmit={handleUrlSubmit} className="flex gap-4">
       <input
         type="text"
         placeholder="URLを入力してください"

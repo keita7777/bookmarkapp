@@ -48,13 +48,13 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="bg-white flex flex-col gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       {errors.root && <p className="text-red-500 text-lg font-bold">{errors.root.message}</p>}
-      <div className="flex justify-center items-center gap-4">
-        <div className="relative w-[400px] h-[250px]">
+      <div className="flex justify-center flex-col xl:flex-row items-start gap-4">
+        <div className="relative w-full xl:w-[400px] h-[300px] xl:h-[250px]">
           <Image src={urlData?.image || testImage} fill alt="画像" />
         </div>
-        <div className="flex flex-col gap-2 flex-1">
+        <div className="flex flex-col gap-2 flex-1 w-full">
           <label htmlFor="" className="text-xl font-bold">
             タイトル
           </label>
@@ -76,57 +76,30 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
         </div>
       </div>
 
-      <div className="flex gap-4 p-6 border border-black rounded-md">
-        <div className="flex flex-col gap-2 w-1/3">
-          <label htmlFor="" className="text-xl font-bold">
-            第1階層
-          </label>
-          <select
-            name=""
-            id=""
-            className="border border-black rounded-md p-2"
-            defaultValue={""}
-            onChange={(e) => {
-              setFolder_level1(e.target.value);
-              setFolder_level2(null);
-              setFolder_level3(null);
-            }}
-          >
-            <option value="" disabled>
-              フォルダを選択してください
-            </option>
-            {folderData
-              // 第1階層のフォルダを抽出
-              .filter((item) => item.parent_relation.level === "ONE")
-              .map((folder) => (
-                <option key={folder.id} value={folder.id}>
-                  {folder.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        {/* 第1階層のフォルダが選択されている、かつ選択されたフォルダに子フォルダが存在する場合に第2階層のメニューを表示 */}
-        {folder_level1 && folderData.filter((item) => item.id === folder_level1)[0].parent_relation.hasChild ? (
-          <div className="flex flex-col gap-2 w-1/3">
+      <div className="flex flex-col gap-2">
+        <p className="text-xl font-bold">フォルダ</p>
+        <div className="flex flex-col gap-4 p-6 border border-black rounded-md">
+          <div className="flex flex-col gap-2 w-full">
             <label htmlFor="" className="text-xl font-bold">
-              第2階層
+              第1階層
             </label>
             <select
               name=""
               id=""
               className="border border-black rounded-md p-2"
+              defaultValue={""}
               onChange={(e) => {
-                setFolder_level2(e.target.value);
+                setFolder_level1(e.target.value);
+                setFolder_level2(null);
                 setFolder_level3(null);
               }}
             >
-              <option disabled value="">
+              <option value="" disabled>
                 フォルダを選択してください
               </option>
-              <option value="">設定しない</option>
               {folderData
-                // 第1階層のフォルダの子フォルダを抽出
-                .filter((item) => item.parent_relation.parent_folder === folder_level1)
+                // 第1階層のフォルダを抽出
+                .filter((item) => item.parent_relation.level === "ONE")
                 .map((folder) => (
                   <option key={folder.id} value={folder.id}>
                     {folder.name}
@@ -134,34 +107,64 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
                 ))}
             </select>
           </div>
-        ) : null}
-        {/* 第2階層のフォルダが選択されている、かつ選択されたフォルダに子フォルダが存在する場合に第3階層のメニューを表示 */}
-        {folder_level2 && folderData.filter((item) => item.id === folder_level2)[0].parent_relation.hasChild ? (
-          <div className="flex flex-col gap-2 w-1/3">
-            <label htmlFor="" className="text-xl font-bold">
-              第3階層
-            </label>
-            <select
-              name=""
-              id=""
-              className="border border-black rounded-md p-2"
-              onChange={(e) => setFolder_level3(e.target.value)}
-            >
-              <option disabled value="">
-                フォルダを選択してください
-              </option>
-              <option value="">設定しない</option>
-              {folderData
-                // 第2階層のフォルダの子フォルダを抽出
-                .filter((item) => item.parent_relation.parent_folder === folder_level2)
-                .map((folder) => (
-                  <option key={folder.id} value={folder.id}>
-                    {folder.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        ) : null}
+          {/* 第1階層のフォルダが選択されている、かつ選択されたフォルダに子フォルダが存在する場合に第2階層のメニューを表示 */}
+          {folder_level1 && folderData.filter((item) => item.id === folder_level1)[0].parent_relation.hasChild ? (
+            <div className="flex flex-col gap-2 w-full">
+              <label htmlFor="" className="text-xl font-bold">
+                第2階層
+              </label>
+              <select
+                name=""
+                id=""
+                className="border border-black rounded-md p-2"
+                onChange={(e) => {
+                  setFolder_level2(e.target.value);
+                  setFolder_level3(null);
+                }}
+              >
+                <option disabled value="">
+                  フォルダを選択してください
+                </option>
+                <option value="">設定しない</option>
+                {folderData
+                  // 第1階層のフォルダの子フォルダを抽出
+                  .filter((item) => item.parent_relation.parent_folder === folder_level1)
+                  .map((folder) => (
+                    <option key={folder.id} value={folder.id}>
+                      {folder.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          ) : null}
+          {/* 第2階層のフォルダが選択されている、かつ選択されたフォルダに子フォルダが存在する場合に第3階層のメニューを表示 */}
+          {folder_level2 && folderData.filter((item) => item.id === folder_level2)[0].parent_relation.hasChild ? (
+            <div className="flex flex-col gap-2 w-full">
+              <label htmlFor="" className="text-xl font-bold">
+                第3階層
+              </label>
+              <select
+                name=""
+                id=""
+                className="border border-black rounded-md p-2"
+                onChange={(e) => setFolder_level3(e.target.value)}
+              >
+                <option disabled value="">
+                  フォルダを選択してください
+                </option>
+                <option value="">設定しない</option>
+                {folderData
+                  // 第2階層のフォルダの子フォルダを抽出
+                  .filter((item) => item.parent_relation.parent_folder === folder_level2)
+                  .map((folder) => (
+                    <option key={folder.id} value={folder.id}>
+                      {folder.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          ) : null}
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -175,9 +178,11 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
           {...register("memo")}
         />
       </div>
-      <div className="flex gap-6 justify-center items-center">
-        <button className="rounded-md bg-gray-300 w-48 text-xl font-bold py-1">{bookmarkData ? "更新" : "作成"}</button>
-        <button onClick={handleCancel} className="rounded-md bg-gray-300 w-48 text-xl font-bold py-1">
+      <div className="flex gap-6 justify-center items-center w-full xl:w-[400px] mx-auto">
+        <button className="rounded-md bg-gray-300 w-1/2 text-xl font-bold py-2">
+          {bookmarkData ? "更新" : "作成"}
+        </button>
+        <button onClick={handleCancel} className="rounded-md bg-gray-300 w-1/2 text-xl font-bold py-2">
           キャンセル
         </button>
       </div>

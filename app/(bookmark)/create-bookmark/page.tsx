@@ -10,8 +10,8 @@ const folderData = foldersDummyData as FoldersDummyData;
 
 export default function CreateBookmarkPage() {
   return (
-    <div>
+    <>
       <BookmarkForm folderData={folderData} />
-    </div>
+    </>
   );
 }
