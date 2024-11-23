@@ -17,8 +17,6 @@ const UrlSubmit = ({ url, setUrl, setUrlData, setIsUrlSubmit }: Props) => {
     e.preventDefault();
 
     if (url) {
-      console.log(url);
-
       // const data = await getUrlInfo(url);
       // setUrlData(data);
     }

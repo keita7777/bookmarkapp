@@ -7,7 +7,7 @@ import { useState } from "react";
 import BookmarkSubmit from "./BookmarkSubmit";
 import UrlSubmit from "./UrlSubmit";
 import { bookmarkDummyType } from "@/DummtData/types/bookmarkType";
-import { Folder, FoldersDummyData } from "@/DummtData/types/folderType";
+import { FoldersDummyData } from "@/DummtData/types/folderType";
 
 type Props = {
   folderData: FoldersDummyData;

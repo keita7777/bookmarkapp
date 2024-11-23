@@ -26,8 +26,8 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
   const {
     handleSubmit,
     register,
-    setError,
-    setValue,
+    // setError,
+    // setValue,
     formState: { errors },
   } = useForm();
 
@@ -44,7 +44,7 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
   };
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data, folder_level1, folder_level2, folder_level3);
+    // console.log(data, folder_level1, folder_level2, folder_level3);
   };
 
   return (
