@@ -10,10 +10,10 @@ export default function BookmarkLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row md:h-screen">
       <OpenMenuProvider>
         <Header />
-        <main className="flex-1 p-4 h-screen">{children}</main>
+        <main className="flex-1 p-4">{children}</main>
       </OpenMenuProvider>
     </div>
   );
