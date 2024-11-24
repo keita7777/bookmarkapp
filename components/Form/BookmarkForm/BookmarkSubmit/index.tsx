@@ -32,7 +32,7 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
     formState: { errors },
   } = useForm();
 
-  // フォルダ階層
+  // フォルダメニューを選択するごとに、フォルダ階層を設定
   const [folder_level1, setFolder_level1] = useState<string | null>(null);
   const [folder_level2, setFolder_level2] = useState<string | null>(null);
   const [folder_level3, setFolder_level3] = useState<string | null>(null);
@@ -72,6 +72,7 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
 
     const { title, description, selectedFolder, memo } = data;
 
+    // bookmarksテーブルにデータを挿入する処理を実行
     await createBookmark(urlData.url, title, description, selectedFolder, urlData.image, memo);
   };
 
