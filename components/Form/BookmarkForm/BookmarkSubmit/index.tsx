@@ -78,7 +78,14 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-      {errors.root && <p className="text-red-500 text-lg font-bold">{errors.root.message}</p>}
+      {Object.entries(errors).map(
+        ([key, error]) =>
+          error?.message && (
+            <p key={key} className="text-red-500 text-lg font-bold">
+              {error.message?.toString()}
+            </p>
+          ),
+      )}
       <div className="flex justify-center flex-col xl:flex-row items-start gap-4">
         <div className="relative w-full xl:w-[400px] h-[300px] xl:h-[250px]">
           <Image src={urlData?.image || testImage} fill alt="画像" />
@@ -91,7 +98,7 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
             type="text"
             className="border border-black rounded-md p-2"
             defaultValue={bookmarkData?.title || urlData?.title || ""}
-            {...register("title")}
+            {...register("title", { required: "タイトルを入力してください" })}
           />
           <label htmlFor="" className="text-xl font-bold">
             詳細
