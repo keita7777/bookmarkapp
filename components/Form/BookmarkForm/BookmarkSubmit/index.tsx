@@ -72,15 +72,6 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
 
     const { title, description, selectedFolder, memo } = data;
 
-    console.log({
-      url: urlData.url,
-      title,
-      description,
-      selectedFolder,
-      image: urlData.image,
-      memo,
-    });
-
     await createBookmark(urlData.url, title, description, selectedFolder, urlData.image, memo);
   };
 
