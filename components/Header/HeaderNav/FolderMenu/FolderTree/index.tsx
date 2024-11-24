@@ -1,6 +1,5 @@
 // フォルダを階層構造で表示させるコンポーネント
 
-import { FoldersDummyData } from "@/DummtData/types/folderType";
 import FolderItem from "./FolderItem";
 import { FolderWithRelation } from "@/types/folderType";
 
