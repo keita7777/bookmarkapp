@@ -42,7 +42,7 @@ export const createBookmark = async (
   image: string | null | undefined,
   memo: string | null,
 ) => {
-  await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/bookmark`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/bookmark`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -58,4 +58,9 @@ export const createBookmark = async (
       memo,
     }),
   });
+
+  if (!res.ok) {
+    console.error("ブックマークの作成に失敗しました", res.statusText);
+    return null;
+  }
 };
