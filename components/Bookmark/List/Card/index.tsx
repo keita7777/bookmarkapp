@@ -1,6 +1,5 @@
 import Image from "next/image";
 import testImage from "@/DummtData/images/test-image.png";
-import { bookmarkDummyType } from "@/DummtData/types/bookmarkType";
 import SettingButton from "./SettingButton";
 import { BookmarkWithMemo } from "@/types/bookmarkType";
 
@@ -29,10 +28,12 @@ const BookmarkCard = ({ bookmark }: Props) => {
           <p className="text-gray-600">{bookmark.description}</p>
         </div>
       </div>
-      <div className="bg-gray-600 rounded-md p-3">
-        <h3 className="text-white">メモ</h3>
-        <p className="bg-white mt-2 p-2 rounded-md">{bookmark.memo.memo}</p>
-      </div>
+      {bookmark.memo && (
+        <div className="bg-gray-600 rounded-md p-3">
+          <h3 className="text-white">メモ</h3>
+          <p className="bg-white mt-2 p-2 rounded-md">{bookmark.memo.memo}</p>
+        </div>
+      )}
     </li>
   );
 };
