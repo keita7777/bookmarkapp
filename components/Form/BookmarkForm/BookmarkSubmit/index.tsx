@@ -100,7 +100,7 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
     } else {
       setIsReady(true);
     }
-  }, []);
+  }, [bookmarkData, folderData]);
 
   // 選択したフォルダをuseFormのselectedFolderの値に設定する
   useEffect(() => {

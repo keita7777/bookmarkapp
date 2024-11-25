@@ -74,8 +74,6 @@ export const PUT = async (req: NextRequest) => {
     });
     return NextResponse.json({ message: "更新完了" }, { status: 200 });
   } catch (error) {
-    console.log(error);
-
     return NextResponse.json({ message: "更新失敗", error }, { status: 500 });
   }
 };
