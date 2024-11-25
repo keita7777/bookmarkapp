@@ -139,6 +139,8 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
       // bookmarksテーブルにデータを挿入する処理を実行
       createBookmark(urlData.url, title, description, selectedFolder, urlData.image, memo);
     }
+    router.push("/");
+    router.refresh();
   };
 
   if (!isReady) {
