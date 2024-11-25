@@ -1,6 +1,12 @@
 // ブックマーク編集画面
 // ブックマークIDをパラメータで受け取る
 
-export default function EditBookmarkPage({ params }: { params: { id: string } }) {
-  return <div>ブックマーク編集フォーム{params.id}</div>;
+import BookmarkForm from "@/components/Form/BookmarkForm";
+import { getBookmarkData, getFolderData } from "@/utils/db/fetchData";
+
+export default async function EditBookmarkPage({ params }: { params: { id: string } }) {
+  const folders = await getFolderData();
+  const bookmark = await getBookmarkData(params.id);
+
+  return <BookmarkForm folderData={folders} bookmarkData={bookmark} />;
 }
