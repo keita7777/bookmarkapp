@@ -8,10 +8,11 @@ import BookmarkSubmit from "./BookmarkSubmit";
 import UrlSubmit from "./UrlSubmit";
 import { bookmarkDummyType } from "@/DummtData/types/bookmarkType";
 import { FolderWithRelation } from "@/types/folderType";
+import { BookmarkWithMemo } from "@/types/bookmarkType";
 
 type Props = {
   folderData: FolderWithRelation[];
-  bookmarkData?: bookmarkDummyType;
+  bookmarkData?: BookmarkWithMemo;
 };
 
 const BookmarkForm = ({ folderData, bookmarkData }: Props) => {
