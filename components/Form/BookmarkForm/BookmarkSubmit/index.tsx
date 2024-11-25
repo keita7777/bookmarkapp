@@ -133,11 +133,11 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
     if (bookmarkData) {
       // 更新の場合
       // bookmarksテーブルのデータを更新する処理を実行
-      await updateBookmark(bookmarkData.id, urlData.url, title, description, selectedFolder, urlData.image, memo);
+      updateBookmark(bookmarkData.id, urlData.url, title, description, selectedFolder, urlData.image, memo);
     } else {
       // 新規作成の場合
       // bookmarksテーブルにデータを挿入する処理を実行
-      await createBookmark(urlData.url, title, description, selectedFolder, urlData.image, memo);
+      createBookmark(urlData.url, title, description, selectedFolder, urlData.image, memo);
     }
   };
 
