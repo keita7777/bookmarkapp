@@ -18,9 +18,9 @@ export const getFolderData = async () => {
 };
 
 // ブックマークデータを取得する処理
-
-export const getBookmarkData = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/bookmark`, {
+// 引数がない場合は全件、ある場合は特定のブックマークを取得する
+export const getBookmarkData = async (id?: string) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/bookmark${id ? "?bookmarkId=" + id : ""}`, {
     method: "GET",
     cache: "no-store",
   });
