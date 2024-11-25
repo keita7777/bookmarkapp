@@ -19,7 +19,7 @@ const FolderForm = ({ folderData }: Props) => {
     register,
     setError,
     // resetField,
-    setValue,
+    // setValue,
     watch,
   } = useForm({
     defaultValues: {
