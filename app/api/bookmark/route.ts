@@ -1,9 +1,15 @@
 import prisma from "@/utils/db/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async () => {
+export const GET = async (request: NextRequest) => {
+  const searchParams = request.nextUrl.searchParams;
+  const bookmarkId = searchParams.get("bookmarkId");
+
   try {
     const bookmarks = await prisma.bookmarks.findMany({
+      where: {
+        id: bookmarkId || undefined,
+      },
       include: {
         memo: true,
       },
