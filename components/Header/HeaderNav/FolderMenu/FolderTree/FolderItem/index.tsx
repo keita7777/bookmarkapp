@@ -13,11 +13,12 @@ import { useState } from "react";
 
 type Props = {
   folder: FolderWithRelation;
+  folderData: FolderWithRelation[];
   isSubFolderVisible: boolean;
   toggleFolder: () => void;
 };
 
-const FolderItem = ({ folder, isSubFolderVisible, toggleFolder }: Props) => {
+const FolderItem = ({ folder, folderData, isSubFolderVisible, toggleFolder }: Props) => {
   // URLからIDを取得、folder.idと一致する場合にスタイルを変更する
   const path = usePathname();
   const folderPath = path.split("/")[1];
@@ -63,6 +64,7 @@ const FolderItem = ({ folder, isSubFolderVisible, toggleFolder }: Props) => {
             folderName={folder.name}
             hasChild={folder.parent_relation.hasChild}
             setIsDeleteClick={setIsDeleteClick}
+            folderData={folderData}
           />,
           document.getElementById(folder.id)!,
         )}
