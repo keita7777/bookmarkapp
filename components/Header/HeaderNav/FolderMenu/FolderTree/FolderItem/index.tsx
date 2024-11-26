@@ -53,9 +53,7 @@ const FolderItem = ({ folder, folderData, isSubFolderVisible, toggleFolder }: Pr
         {/* フォルダの設定ボタン（フォルダ編集/フォルダ削除メニューの表示） */}
         <FolderSettingButton id={folder.id} openMenuId={openMenuId} setOpenMenuId={setOpenMenuId} />
       </div>
-      {openMenuId === folder.id && (
-        <FolderSettingMenu id={folder.id} folderName={folder.name} setIsDeleteClick={setIsDeleteClick} />
-      )}
+      {openMenuId === folder.id && <FolderSettingMenu id={folder.id} setIsDeleteClick={setIsDeleteClick} />}
 
       {isDeleteClick &&
         createPortal(

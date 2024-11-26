@@ -1,15 +1,12 @@
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
-import { createPortal } from "react-dom";
-import DeleteModal from "../../../../DeleteModal";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   id: string;
-  folderName: string;
   setIsDeleteClick: Dispatch<SetStateAction<boolean>>;
 };
 
-const FolderSettingMenu = ({ id, folderName, setIsDeleteClick }: Props) => {
+const FolderSettingMenu = ({ id, setIsDeleteClick }: Props) => {
   return (
     <div className="absolute right-8 md:-right-44 top-3/4 md:top-0 z-10 bg-gray-200 px-4 py-3 rounded-xl">
       <ul>

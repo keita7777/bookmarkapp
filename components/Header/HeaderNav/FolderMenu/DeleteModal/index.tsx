@@ -1,8 +1,7 @@
 import { FolderWithRelation } from "@/types/folderType";
-import { getBreadcrumbPath } from "@/utils/common/breadcrumbs";
 import { deleteFolder } from "@/utils/db/fetchData";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   id: string;

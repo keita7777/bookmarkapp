@@ -147,8 +147,6 @@ export const DELETE = async (req: NextRequest) => {
 
     return NextResponse.json({ message: "削除完了" }, { status: 200 });
   } catch (error) {
-    console.log(error);
-
     return NextResponse.json({ message: "削除失敗", error }, { status: 500 });
   }
 };
