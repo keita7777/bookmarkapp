@@ -7,6 +7,9 @@ import FolderSettingButton from "./FolderSettingButton";
 import { useOpenMenu } from "@/context/OpenMenuContext";
 import FolderSettingMenu from "./FolderSettingButton/FolderSettingMenu";
 import { FolderWithRelation } from "@/types/folderType";
+import { createPortal } from "react-dom";
+import DeleteModal from "../../DeleteModal";
+import { useState } from "react";
 
 type Props = {
   folder: FolderWithRelation;
@@ -20,6 +23,8 @@ const FolderItem = ({ folder, isSubFolderVisible, toggleFolder }: Props) => {
   const folderPath = path.split("/")[1];
 
   const { openMenuId, setOpenMenuId } = useOpenMenu();
+
+  const [isDeleteClick, setIsDeleteClick] = useState(false);
 
   return (
     <div className="flex items-center relative">
@@ -47,7 +52,20 @@ const FolderItem = ({ folder, isSubFolderVisible, toggleFolder }: Props) => {
         {/* フォルダの設定ボタン（フォルダ編集/フォルダ削除メニューの表示） */}
         <FolderSettingButton id={folder.id} openMenuId={openMenuId} setOpenMenuId={setOpenMenuId} />
       </div>
-      {openMenuId === folder.id && <FolderSettingMenu id={folder.id} />}
+      {openMenuId === folder.id && (
+        <FolderSettingMenu id={folder.id} folderName={folder.name} setIsDeleteClick={setIsDeleteClick} />
+      )}
+
+      {isDeleteClick &&
+        createPortal(
+          <DeleteModal
+            id={folder.id}
+            folderName={folder.name}
+            hasChild={folder.parent_relation.hasChild}
+            setIsDeleteClick={setIsDeleteClick}
+          />,
+          document.getElementById(folder.id)!,
+        )}
     </div>
   );
 };
