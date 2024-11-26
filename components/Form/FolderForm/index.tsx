@@ -3,7 +3,7 @@
 "use client";
 
 import { FolderWithRelation } from "@/types/folderType";
-import { createFolder } from "@/utils/db/fetchData";
+import { createFolder, updateFolder } from "@/utils/db/fetchData";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -25,17 +25,17 @@ const FolderForm = ({ folderData, folderId }: Props) => {
   } = useForm({
     defaultValues: {
       name: "",
-      parentFolder: "",
+      updatedParentFolder: "",
     },
   });
 
   // 選択されたフォルダの階層を定義
   const [folderLevel, setFolderLevel] = useState<"ONE" | "TWO" | "THREE">("ONE");
-  const currentParentFolderValues = watch("parentFolder");
+  const updatedParentFolderValues = watch("updatedParentFolder");
 
   useEffect(() => {
     const defineFolderLevel = () => {
-      const data = folderData.filter((folder) => folder.id === currentParentFolderValues);
+      const data = folderData.filter((folder) => folder.id === updatedParentFolderValues);
       if (data[0]?.parent_relation.level === "ONE") {
         setFolderLevel("TWO");
       } else if (data[0]?.parent_relation.level === "TWO") {
@@ -47,16 +47,16 @@ const FolderForm = ({ folderData, folderId }: Props) => {
         });
       }
     };
-    if (currentParentFolderValues === "") {
+    if (updatedParentFolderValues === "") {
       setFolderLevel("ONE");
     } else {
       defineFolderLevel();
     }
-  }, [currentParentFolderValues, folderData, setError]);
+  }, [updatedParentFolderValues, folderData, setError]);
 
   // 編集の場合ここから
   // フォルダ名と親フォルダの初期値を設定
-  const [parentFolderId, setParentFolderId] = useState<string | null>(null);
+  const [currentParentFolderId, setCurrentParentFolderId] = useState<string | null>(null);
   const [folderName, setFolderName] = useState<string | null>(null);
 
   // propsで渡されたfolderIdをもとにフォルダ名と親フォルダを設定
@@ -65,7 +65,7 @@ const FolderForm = ({ folderData, folderId }: Props) => {
 
     if (result.length <= 0) return null;
 
-    setParentFolderId(result[0].parent_relation.parent_folder);
+    setCurrentParentFolderId(result[0].parent_relation.parent_folder);
     setFolderName(result[0].name);
   }, [folderData, folderId]);
 
@@ -74,14 +74,14 @@ const FolderForm = ({ folderData, folderId }: Props) => {
     if (folderId) {
       getParentFolder();
 
-      if (parentFolderId !== null) {
-        setValue("parentFolder", parentFolderId);
+      if (currentParentFolderId !== null) {
+        setValue("updatedParentFolder", currentParentFolderId);
       }
       if (folderName !== null) {
         setValue("name", folderName);
       }
     }
-  }, [parentFolderId, folderName, setValue, folderId, getParentFolder]);
+  }, [currentParentFolderId, folderName, setValue, folderId, getParentFolder]);
 
   // propsで渡されたfolderIdをもとに子フォルダを取得
   // 親フォルダを変更した際に階層が3を超えないようにする対策
@@ -91,10 +91,10 @@ const FolderForm = ({ folderData, folderId }: Props) => {
     if (folderId) {
       // 編集の場合
 
-      // resultを親フォルダに持つフォルダを取得
+      // 編集中のフォルダの子フォルダを取得
       const folderArray = folderData.filter((folder) => folder.parent_relation.parent_folder === folderId);
 
-      // resultを親フォルダに持つフォルダを親フォルダに持つフォルダを取得
+      // 編集中のフォルダの孫フォルダを取得
       const folderArray2 = folderArray.flatMap((folder) =>
         folderData.filter((item) => item.parent_relation.parent_folder === folder.id),
       );
@@ -103,32 +103,23 @@ const FolderForm = ({ folderData, folderId }: Props) => {
         // 孫フォルダがある場合は親フォルダを選択できない
         setFormattedFolderData([]);
       } else if (folderArray.length > 0) {
-        // 子フォルダがある場合は第1階層のフォルダのみ選択可能
-        setFormattedFolderData(folderData.filter((item) => item.parent_relation.level === "ONE"));
+        // 子フォルダがある場合は第1階層のフォルダのみ選択可能（編集中のフォルダは除く）
+        setFormattedFolderData(
+          folderData.filter((item) => item.parent_relation.level === "ONE" && item.id !== folderId),
+        );
       } else {
-        // 子フォルダがない場合は第3階層のフォルダ以外選択可能
-        setFormattedFolderData(folderData.filter((item) => item.parent_relation.level !== "THREE"));
+        // 子フォルダがない場合は第3階層のフォルダ以外選択可能（編集中のフォルダは除く）
+        setFormattedFolderData(
+          folderData.filter((item) => item.parent_relation.level !== "THREE" && item.id !== folderId),
+        );
       }
     } else {
-      // 新規作成の場合、第3階層のフォルダ以外選択可能
-      setFormattedFolderData(folderData.filter((item) => item.parent_relation.level !== "THREE"));
+      // 新規作成の場合、第3階層のフォルダ以外選択可能（編集中のフォルダは除く）
+      setFormattedFolderData(
+        folderData.filter((item) => item.parent_relation.level !== "THREE" && item.id !== folderId),
+      );
     }
   }, [folderId, folderData]);
-
-  //     // 編集の場合
-  //     // resultを親フォルダに持つフォルダを取得
-  //     const folderArray = folderData.filter((folder) => folder.parent_relation.parent_folder === parentFolderId);
-  //     // resultを親フォルダに持つフォルダを親フォルダに持つフォルダを取得
-  //     const folderArray2 = folderArray.map((folder) => {
-  //       folderData.filter((item) => item.parent_relation.parent_folder === folder.id);
-  //     });
-  //     console.log(folderArray2);
-  //   } else {
-  //     // 新規作成の場合
-  //     console.log("folderArray2");
-  //     item.parent_relation.level !== "THREE";
-  //   }
-  // });
 
   // 編集の場合ここまで
 
@@ -139,10 +130,66 @@ const FolderForm = ({ folderData, folderId }: Props) => {
     router.refresh();
   };
 
+  // フォルダ更新後に更新前/更新後の親フォルダのhasChildも更新する必要がある
+  // 更新前の親フォルダが子フォルダを持つか（自身のフォルダ以外）
+  const [currentParentFolderHasChildren, setCurrentParentFolderHasChildren] = useState(false);
+  // 更新後の親フォルダがすでに子フォルダを持っているか（自身のフォルダを含む）
+  const [updateParentFolderHasChildren, setUpdateParentFolderHasChildren] = useState(false);
+
+  useEffect(() => {
+    if (folderId) {
+      // 更新前の親フォルダが、編集中のフォルダ以外に子フォルダを持つか検証
+      const currentData = folderData.filter(
+        (folder) =>
+          // parent_folderがcurrentParentFolderId（更新前の親フォルダ）と一致するフォルダを抽出
+          folder.parent_relation.parent_folder === currentParentFolderId &&
+          // parent_folderがnull（第1階層）は除外
+          folder.parent_relation.parent_folder !== null &&
+          // 編集中のフォルダは除外
+          folder.id !== folderId,
+      );
+
+      if (currentData.length > 0) {
+        setCurrentParentFolderHasChildren(true);
+      } else {
+        setCurrentParentFolderHasChildren(false);
+      }
+
+      // 更新後の親フォルダが、すでに子フォルダを持っているか検証
+      const updateData = folderData.filter(
+        (folder) =>
+          // parent_folderがupdatedParentFolderValues（更新後の親フォルダ）と一致するフォルダを抽出
+          folder.parent_relation.parent_folder === updatedParentFolderValues &&
+          // parent_folderがnull（第1階層）は除外
+          folder.parent_relation.parent_folder !== null,
+      );
+
+      if (updateData.length > 0) {
+        setUpdateParentFolderHasChildren(true);
+      } else {
+        setUpdateParentFolderHasChildren(false);
+      }
+    }
+  }, [folderId, currentParentFolderId, updatedParentFolderValues, folderData]);
+
   const onSubmit = (data: FieldValues) => {
-    const { name, parentFolder } = data;
-    const formattedParentFolder = parentFolder === "" ? null : parentFolder;
-    createFolder(name, formattedParentFolder, folderLevel);
+    const { name, updatedParentFolder } = data;
+    const formattedParentFolder = updatedParentFolder === "" ? null : updatedParentFolder;
+    if (folderId) {
+      updateFolder(
+        folderId,
+        currentParentFolderId,
+        currentParentFolderHasChildren,
+        updateParentFolderHasChildren,
+        name,
+        formattedParentFolder,
+        folderLevel,
+      );
+    } else {
+      createFolder(name, formattedParentFolder, folderLevel);
+    }
+    router.push("/");
+    router.refresh();
   };
 
   return (
@@ -157,7 +204,7 @@ const FolderForm = ({ folderData, folderId }: Props) => {
         <label htmlFor="folder" className="text-xl font-bold">
           親フォルダを選択
         </label>
-        <select className="border border-black rounded-md p-2" {...register("parentFolder")}>
+        <select className="border border-black rounded-md p-2" {...register("updatedParentFolder")}>
           <option value="">指定しない</option>
           {folderData &&
             formattedFolderData.map((folder) => (
