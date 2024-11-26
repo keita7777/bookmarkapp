@@ -56,50 +56,57 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
 
   // bookmarkDataをもとにフォルダのdefaultValueを設定する
   useEffect(() => {
-    if (bookmarkData) {
-      const data = folderData.filter((item) => item.id === bookmarkData.folder_id);
-
-      if (!data) {
-        setIsReady(true);
-        return;
-      }
-
-      const currentFolderData = data[0];
-
-      if (currentFolderData.parent_relation.level === "THREE") {
-        // ブックマークのフォルダが第3階層の場合
-        const folder3 = currentFolderData.id;
-        const folder2 = currentFolderData.parent_relation.parent_folder;
-        const folder1Data = folderData.filter((item) => item.parent_relation.id === folder2);
-        const folder1 = folder1Data[0].parent_relation.parent_folder;
-
-        setFolder_level3_defaultValue(folder3);
-        setFolder_level2_defaultValue(folder2);
-        setFolder_level1_defaultValue(folder1);
-
-        setFolder_level3(folder3);
-        setFolder_level2(folder2);
-        setFolder_level1(folder1);
-      } else if (currentFolderData.parent_relation.level === "TWO") {
-        // ブックマークのフォルダが第2階層の場合
-        const folder2 = currentFolderData.id;
-        const folder1 = currentFolderData.parent_relation.id;
-        setFolder_level2_defaultValue(folder2);
-        setFolder_level1_defaultValue(folder1);
-
-        setFolder_level2(folder2);
-        setFolder_level1(folder1);
-      } else {
-        // ブックマークのフォルダが第1階層の場合
-        const folder1 = currentFolderData.id;
-        setFolder_level1_defaultValue(folder1);
-
-        setFolder_level1(folder1);
-      }
+    if (!bookmarkData) {
       setIsReady(true);
-    } else {
-      setIsReady(true);
+      return;
     }
+
+    const data = folderData.filter((item) => item.id === bookmarkData.folder_id);
+    if (data.length === 0) {
+      setIsReady(true);
+      return;
+    }
+
+    const currentFolderData = data[0];
+    if (currentFolderData.parent_relation.level === "THREE") {
+      // ブックマークのフォルダが第3階層の場合
+      // 編集中のブックマークが紐づく第3階層フォルダを取得
+      const folder3 = currentFolderData.id;
+      // 親の第2階層フォルダを取得
+      const folder2 = currentFolderData.parent_relation.parent_folder;
+      // 親の第1階層フォルダを取得
+      const folder1Data = folderData.filter((item) => item.id === folder2);
+      const folder1 = folder1Data[0]?.parent_relation.parent_folder;
+
+      // それぞれのdefaultValueに設定
+      setFolder_level3_defaultValue(folder3);
+      setFolder_level2_defaultValue(folder2);
+      setFolder_level1_defaultValue(folder1);
+
+      // それぞれのvalueに設定
+      setFolder_level3(folder3);
+      setFolder_level2(folder2);
+      setFolder_level1(folder1);
+    } else if (currentFolderData.parent_relation.level === "TWO") {
+      // ブックマークのフォルダが第2階層の場合
+      // 編集中のブックマークが紐づく第2階層フォルダを取得
+      const folder2 = currentFolderData.id;
+      // 親の第1階層フォルダを取得
+      const folder1 = currentFolderData.parent_relation.parent_folder;
+
+      setFolder_level2_defaultValue(folder2);
+      setFolder_level1_defaultValue(folder1);
+
+      setFolder_level2(folder2);
+      setFolder_level1(folder1);
+    } else {
+      // ブックマークのフォルダが第1階層の場合
+      // 編集中のブックマークが紐づく第1階層フォルダを取得
+      const folder1 = currentFolderData.id;
+      setFolder_level1_defaultValue(folder1);
+      setFolder_level1(folder1);
+    }
+    setIsReady(true);
   }, [bookmarkData, folderData]);
 
   // 選択したフォルダをuseFormのselectedFolderの値に設定する
