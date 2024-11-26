@@ -125,8 +125,6 @@ export const updateFolder = async (
   parentFolder: string | null,
   folderLevel: string,
 ) => {
-  console.log(updateParentFolderHasChildren);
-
   await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/folder?folderId=${folderId}`, {
     method: "PUT",
     headers: {
