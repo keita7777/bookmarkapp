@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
-import { createPortal } from "react-dom";
-import DeleteModal from "../../DeleteModal";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   id: string;
