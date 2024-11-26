@@ -19,10 +19,9 @@ const Breadcrumb = async ({ id }: Props) => {
         {breadcrumbKeys
           .filter((key) => breadcrumb[key]?.name)
           .map((key, index, array) => (
-            <li className="flex justify-center items-center">
+            <li key={key} className="flex justify-center items-center">
               <a
                 href={breadcrumb[key]?.id ? breadcrumb[key]?.id : ""}
-                key={key}
                 className={`underline hover:no-underline ${index === array.length - 1 && "no-underline pointer-events-none"}`}
               >
                 {breadcrumb[key]?.name}
