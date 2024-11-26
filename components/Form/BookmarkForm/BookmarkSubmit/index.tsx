@@ -159,7 +159,7 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
       )}
       <div className="flex justify-center flex-col xl:flex-row items-start gap-4">
         <div className="relative w-full xl:w-[400px] h-[300px] xl:h-[250px]">
-          <Image src={urlData?.image || testImage} fill alt="画像" />
+          <Image src={bookmarkData?.image || urlData?.image || testImage} fill alt="画像" />
         </div>
         <div className="flex flex-col gap-2 flex-1 w-full">
           <label htmlFor="" className="text-xl font-bold">
