@@ -102,7 +102,7 @@ export const PUT = async (req: NextRequest) => {
       });
     }
 
-    // 更新後の親フォルダが更新対象のフォルダ以外に子フォルダを持っていなかった場合
+    // 更新後の親フォルダを設定した場合、かつ更新後の親フォルダが更新対象のフォルダ以外に子フォルダを持っていなかった場合
     // 更新後の親フォルダのfolder_relationデータのhasChildを更新
     if (!data.updateParentFolderHasChildren && data.parentFolder) {
       await prisma.folder_relation.update({
