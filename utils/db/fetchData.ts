@@ -165,3 +165,23 @@ export const deleteFolder = async (folderId: string, relatedFolders: Array<strin
     }),
   });
 };
+
+// ブックマークの件数を取得する処理
+export const countBookmarks = async (folderId?: string) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookmark?count=true${folderId ? `&folderId=${folderId}` : ""}`,
+    {
+      method: "GET",
+      cache: "no-store",
+    },
+  );
+
+  if (!res.ok) {
+    console.error("ブックマーク件数の取得に失敗しました", res.statusText);
+    return null;
+  }
+
+  const data = await res.json();
+
+  return data.bookmarkCount;
+};
