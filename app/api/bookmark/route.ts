@@ -6,6 +6,7 @@ export const GET = async (req: NextRequest) => {
   const folderId = searchParams.get("folderId");
   const bookmarkId = searchParams.get("bookmarkId");
   const isCount = searchParams.get("count");
+  const page = Number(searchParams.get("page"));
 
   // folderIdの子フォルダの配列を用意
   let childFolders: Array<string> = [];
@@ -66,6 +67,8 @@ export const GET = async (req: NextRequest) => {
         include: {
           memo: true,
         },
+        take: 6,
+        skip: page !== 1 ? (page - 1) * 6 : undefined,
       });
       return NextResponse.json({ message: "取得完了", bookmarks }, { status: 200 });
     }
