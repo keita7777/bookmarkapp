@@ -3,13 +3,16 @@
 import CreateButton from "@/components/Bookmark/CreateButton";
 import BookmarkList from "@/components/Bookmark/List";
 import Pagenation from "@/components/Bookmark/Pagenation";
+import { countBookmarks } from "@/utils/db/fetchData";
 
-export default function Home() {
+export default async function Home() {
+  const bookmarkCount = await countBookmarks();
+
   return (
     <>
       <CreateButton />
       <BookmarkList />
-      <Pagenation />
+      <Pagenation bookmarkCount={bookmarkCount} />
     </>
   );
 }
