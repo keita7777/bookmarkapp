@@ -2,18 +2,20 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-// ブックマークの総数
-const itemCount = 100;
 // 1ページ表示させるブックマークの数
 const pageSize = 6;
 // 現在のページ番号
 const currentPage = 1;
 
-const Pagenation = () => {
+type Props = {
+  bookmarkCount: number;
+};
+
+const Pagenation = ({ bookmarkCount }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   // ページの総数（ブックマークの総数 / 1ページ表示させるブックマークの数）
-  const pageCount = Math.ceil(itemCount / pageSize);
+  const pageCount = Math.ceil(bookmarkCount / pageSize);
 
   // ページネーションボタンクリック時の処理
   const changePage = (page: number) => {
