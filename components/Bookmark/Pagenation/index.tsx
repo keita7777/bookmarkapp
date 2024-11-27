@@ -4,14 +4,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 // 1ページ表示させるブックマークの数
 const pageSize = 6;
-// 現在のページ番号
-const currentPage = 1;
 
 type Props = {
   bookmarkCount: number;
+  currentPage: number;
 };
 
-const Pagenation = ({ bookmarkCount }: Props) => {
+const Pagenation = ({ bookmarkCount, currentPage }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   // ページの総数（ブックマークの総数 / 1ページ表示させるブックマークの数）
