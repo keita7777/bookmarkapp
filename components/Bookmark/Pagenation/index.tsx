@@ -35,8 +35,8 @@ const Pagenation = ({ bookmarkCount, currentPage }: Props) => {
       range.push(1); // 最初のページをrangeに格納
 
       // 現在のページの前後を表示
-      let start = Math.max(currentPage - visibleRange, 2);
-      let end = Math.min(currentPage + visibleRange, pageCount - 1);
+      const start = Math.max(currentPage - visibleRange, 2);
+      const end = Math.min(currentPage + visibleRange, pageCount - 1);
 
       if (start > 2) range.push("..."); // 左側に「...」を格納
       for (let i = start; i <= end; i++) range.push(i); // 中間のページ番号を格納
