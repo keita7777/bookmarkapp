@@ -18,9 +18,23 @@ export const getFolderData = async (id?: string) => {
 
 // ブックマークデータを取得する処理
 // 引数がない場合は全件、ある場合は特定のブックマークを取得する
-export const getBookmarkData = async ({ folderId, bookmarkId }: { folderId?: string; bookmarkId?: string }) => {
+export const getBookmarkData = async ({
+  folderId,
+  bookmarkId,
+  page,
+}: {
+  folderId?: string;
+  bookmarkId?: string;
+  page?: number;
+}) => {
+  const params = new URLSearchParams();
+  if (folderId) params.append("folderId", folderId);
+  if (bookmarkId) params.append("bookmarkId", bookmarkId);
+  if (page) params.append("page", page.toString());
+
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookmark${folderId ? "?folderId=" + folderId : ""}${bookmarkId ? "?bookmarkId=" + bookmarkId : ""}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookmark?${params.toString()}
+    `,
     {
       method: "GET",
       cache: "no-store",
