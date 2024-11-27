@@ -14,7 +14,6 @@ const Pagenation = () => {
   const searchParams = useSearchParams();
   // ページの総数（ブックマークの総数 / 1ページ表示させるブックマークの数）
   const pageCount = Math.ceil(itemCount / pageSize);
-  console.log(pageCount);
 
   // ページネーションボタンクリック時の処理
   const changePage = (page: number) => {
