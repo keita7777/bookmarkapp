@@ -1,9 +1,7 @@
 "use client";
 
+import { pageSize } from "@/utils/common/pageSize";
 import { useRouter, useSearchParams } from "next/navigation";
-
-// 1ページ表示させるブックマークの数
-const pageSize = 6;
 
 type Props = {
   bookmarkCount: number;

@@ -1,3 +1,4 @@
+import { pageSize } from "@/utils/common/pageSize";
 import prisma from "@/utils/db/db";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -67,7 +68,7 @@ export const GET = async (req: NextRequest) => {
         include: {
           memo: true,
         },
-        take: 6,
+        take: pageSize,
         skip: page !== 1 ? (page - 1) * 6 : undefined,
       });
       return NextResponse.json({ message: "取得完了", bookmarks }, { status: 200 });
