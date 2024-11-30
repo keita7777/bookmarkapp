@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { passwordSchema } from "./passwordSchema";
 
-export const loginSchema = z.object({
+export const signinSchema = z.object({
   email: z
     .string()
     .min(1, "メールアドレスを入力してください")
