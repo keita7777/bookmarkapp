@@ -1,15 +1,19 @@
 "use client";
 
+import { signupFormType } from "@/types/authType";
+import { createUser } from "@/utils/auth/authFunctions";
 import { signupSchema } from "@/validations/signupSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const SignupForm = () => {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
-    // setError,
+    setError,
     // setValue,
     formState: { errors },
   } = useForm({
@@ -22,16 +26,30 @@ const SignupForm = () => {
     },
   });
 
-  const onSubmit = () =>
-    // data: FieldValues
-    {
-      // console.log(data);
-    };
+  const onSubmit = async (data: signupFormType) => {
+    const res = await createUser(data);
+
+    if (res?.error) {
+      if (res.code === "P2002") {
+        setError("email", {
+          message: "このメールアドレスはすでに登録されています",
+        });
+      } else {
+        setError("root", {
+          message: "ユーザー登録に失敗しました",
+        });
+      }
+    } else {
+      router.push("/");
+      router.refresh();
+    }
+  };
 
   return (
     <div className="flex flex-col items-center gap-4 border border-black w-full max-w-[800px] px-4 md:px-20 py-6 rounded-md">
       <h1 className="text-2xl md:text-4xl font-bold">新規ユーザー登録</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full">
+        {errors["root"] && <p className="text-red-500 font-bold">{errors["root"].message}</p>}
         <div className="flex flex-col gap-2">
           <label htmlFor="email">メールアドレス</label>
           <input className="border border-black rounded-md outline-none px-2 py-1" type="text" {...register("email")} />
