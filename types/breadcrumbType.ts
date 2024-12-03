@@ -1,6 +1,4 @@
-type BreadcrumbItem = {
-  id: string | null;
-  name: string | null;
+export type BreadcrumbItem = {
+  bookmarkId: string;
+  breadcrumbArray: string[];
 };
-
-export type BreadcrumbType = Record<"currentFolder" | "parentFolderName" | "grandParentFolderName", BreadcrumbItem>;
