@@ -91,7 +91,50 @@ export const GET = async (req: NextRequest) => {
           take: pageSize,
           skip: page !== 1 ? (page - 1) * 6 : undefined,
         });
-        return NextResponse.json({ message: "取得完了", bookmarks }, { status: 200 });
+
+        // 取得したbookmarksデータをもとに親フォルダの配列を取得（BookmarkCardコンポーネントに表示するフォルダ階層表示に使用）
+        const folderData = await prisma.folders.findMany({
+          include: {
+            parent_relation: true,
+          },
+        });
+
+        const folderMap = folderData.reduce(
+          (map, folder) => {
+            map[folder.id] = folder;
+            return map;
+          },
+          {} as Record<string, (typeof folderData)[0]>,
+        );
+
+        const breadcrumbData = bookmarks.map((item) => {
+          const breadcrumbArray: Array<string> = [];
+          let currentFolderId = item.folder_id;
+
+          while (currentFolderId) {
+            // 現在のフォルダを取得
+            const parentFolder = folderMap[currentFolderId];
+
+            // フォルダ名を追加
+            if (parentFolder) {
+              breadcrumbArray.unshift(parentFolder.name); // name を breadcrumbArray に追加
+            }
+
+            // 親フォルダが存在しなければループ終了
+            if (!parentFolder || !parentFolder.parent_relation?.parent_folder) break;
+
+            // 親フォルダのIDを次の検索対象に設定
+            currentFolderId = parentFolder.parent_relation.parent_folder;
+          }
+
+          // オブジェクトとして返す
+          return {
+            bookmarkId: item.id,
+            breadcrumbArray, // フォルダ名の配列
+          };
+        });
+
+        return NextResponse.json({ message: "取得完了", bookmarks, breadcrumbData }, { status: 200 });
       }
     }
   } catch (error) {
