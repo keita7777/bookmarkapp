@@ -35,14 +35,14 @@ const BookmarkCard = async ({ bookmark, breadcrumb }: Props) => {
         >
           <Image src={bookmark.image || noImage} fill alt="画像" />
         </a>
-        <div className="flex flex-col gap-2 w-full xl:ml-5">
+        <div className="flex flex-col gap-2 w-full xl:ml-5 break-words overflow-hidden">
           <h2 className="text-xl font-bold">{bookmark.title}</h2>
 
           <p className="text-gray-600">{bookmark.description}</p>
         </div>
       </div>
       {bookmark.memo && (
-        <div className="bg-gray-600 rounded-md p-3">
+        <div className="bg-gray-600 rounded-md p-3 break-words overflow-hidden">
           <h3 className="text-white">メモ</h3>
           <p className="bg-white mt-2 p-2 rounded-md">{bookmark.memo.memo}</p>
         </div>
