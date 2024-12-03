@@ -43,7 +43,6 @@ export const getFolderData = async (id?: string) => {
 };
 
 // ブックマークデータを取得する処理
-// 引数がない場合は全件、ある場合は特定のブックマークを取得する
 interface BookmarkData {
   bookmarks: BookmarkWithMemo[];
   breadcrumbData: BreadcrumbItem[];
@@ -51,18 +50,15 @@ interface BookmarkData {
 
 export const getBookmarkData = async ({
   folderId,
-  bookmarkId,
   page,
   query,
 }: {
   folderId?: string;
-  bookmarkId?: string;
   page?: number;
   query?: string;
 }): Promise<BookmarkData | null> => {
   const params = new URLSearchParams();
   if (folderId) params.append("folderId", folderId);
-  if (bookmarkId) params.append("bookmarkId", bookmarkId);
   if (page) params.append("page", page.toString());
   if (query) params.append("query", query);
 
@@ -97,6 +93,41 @@ export const getBookmarkData = async ({
     bookmarks: data.bookmarks,
     breadcrumbData: data.breadcrumbData,
   };
+};
+
+// 特定のブックマークデータを取得する処理
+export const getSingleBookmarkData = async (bookmarkId: string) => {
+  const params = new URLSearchParams();
+  if (bookmarkId) params.append("bookmarkId", bookmarkId);
+
+  const userId = await getUserId();
+  if (!userId) {
+    console.error("ユーザーが見つかりません");
+    return null;
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookmark?${params.toString()}
+    `,
+    {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        // ヘッダーにユーザーIDを含める
+        Authorization: "Bearer " + userId,
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  if (!res.ok) {
+    console.error("ブックマークデータの取得に失敗しました", res.statusText);
+    return null;
+  }
+
+  const data = await res.json();
+
+  return data.bookmarks;
 };
 
 // ブックマークを新規作成する処理
