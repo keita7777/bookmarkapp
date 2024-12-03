@@ -47,35 +47,24 @@ export const GET = async (req: NextRequest) => {
       resultArray.push(folderId);
     }
 
+    // queryの有無によってbookmarksデータの取得条件を変更
+    const whereCondition: any = {
+      user_id: userId,
+      folder_id: folderId ? { in: resultArray } : undefined,
+    };
+
+    if (query) {
+      whereCondition.OR = [
+        { title: { contains: query } },
+        { description: { contains: query } },
+        { memo: { memo: { contains: query } } },
+      ];
+    }
+
     if (isCount) {
       // ブックマークの件数を取得する
       const bookmarkCount = await prisma.bookmarks.count({
-        where: {
-          user_id: userId,
-          folder_id: {
-            // folderIdがある場合は子フォルダ、孫フォルダを含めて取得する
-            in: folderId ? resultArray : undefined,
-          },
-          OR: [
-            {
-              title: {
-                contains: query ? query : undefined,
-              },
-            },
-            {
-              description: {
-                contains: query ? query : undefined,
-              },
-            },
-            {
-              memo: {
-                memo: {
-                  contains: query ? query : undefined,
-                },
-              },
-            },
-          ],
-        },
+        where: whereCondition,
       });
 
       return NextResponse.json({ message: "取得完了", bookmarkCount }, { status: 200 });
@@ -95,33 +84,7 @@ export const GET = async (req: NextRequest) => {
       } else {
         // bookmarkIdがない場合は指定したブックマークリストをfindManyで取得
         const bookmarks = await prisma.bookmarks.findMany({
-          where: {
-            id: bookmarkId || undefined,
-            user_id: userId,
-            folder_id: {
-              // folderIdがある場合は子フォルダ、孫フォルダを含めて取得する
-              in: folderId ? resultArray : undefined,
-            },
-            OR: [
-              {
-                title: {
-                  contains: query ? query : undefined,
-                },
-              },
-              {
-                description: {
-                  contains: query ? query : undefined,
-                },
-              },
-              {
-                memo: {
-                  memo: {
-                    contains: query ? query : undefined,
-                  },
-                },
-              },
-            ],
-          },
+          where: whereCondition,
           include: {
             memo: true,
           },
