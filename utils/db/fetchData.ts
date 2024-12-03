@@ -59,8 +59,6 @@ export const getBookmarkData = async ({
   if (page) params.append("page", page.toString());
   if (query) params.append("query", query);
 
-  console.log("params=====>" + params);
-
   const userId = await getUserId();
   if (!userId) {
     console.error("ユーザーが見つかりません");
