@@ -8,6 +8,7 @@ export const GET = async (req: NextRequest) => {
   const bookmarkId = searchParams.get("bookmarkId");
   const isCount = searchParams.get("count");
   const page = Number(searchParams.get("page"));
+  const query = searchParams.get("query");
 
   // リクエストヘッダーからユーザーIDを取得
   const userId = req.headers.get("Authorization")?.replace("Bearer ", "");
@@ -51,6 +52,9 @@ export const GET = async (req: NextRequest) => {
       const bookmarkCount = await prisma.bookmarks.count({
         where: {
           user_id: userId,
+          title: {
+            contains: query ? query : undefined,
+          },
           folder_id: {
             // folderIdがある場合は子フォルダ、孫フォルダを含めて取得する
             in: folderId ? resultArray : undefined,
@@ -81,6 +85,9 @@ export const GET = async (req: NextRequest) => {
             folder_id: {
               // folderIdがある場合は子フォルダ、孫フォルダを含めて取得する
               in: folderId ? resultArray : undefined,
+            },
+            title: {
+              contains: query ? query : undefined,
             },
           },
           include: {
