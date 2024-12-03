@@ -1,52 +1,20 @@
 // 自身のフォルダと親フォルダの「名称」「id」を取得する処理
 
-import { getFolderData } from "../db/fetchData";
+import { FolderWithRelation } from "@/types/folderType";
 
-export const getBreadcrumbPath = async (id: string) => {
-  const breadcrumb = {
-    currentFolder: {
-      id: null,
-      name: null,
-    },
-    parentFolderName: {
-      id: null,
-      name: null,
-    },
-    grandParentFolderName: {
-      id: null,
-      name: null,
-    },
-  };
+export const getBreadcrumbPath = (folderData: FolderWithRelation[], id: string) => {
+  const breadcrumbArray: { id: string; name: string }[] = [];
 
-  // フォルダ名を取得しbreadcrumbのfolderNameに設定
-  const folderData = await getFolderData(id);
+  let currentFolder: FolderWithRelation | null = folderData.find((folder) => folder.id === id) || null;
 
-  if (!folderData || folderData.length <= 0) return breadcrumb;
+  while (currentFolder !== null) {
+    // 現在のフォルダの id と name を追加
+    breadcrumbArray.unshift({ id: currentFolder.id, name: currentFolder.name });
 
-  breadcrumb.currentFolder.id = folderData[0].id;
-  breadcrumb.currentFolder.name = folderData[0].name;
-  // 親フォルダがない場合はbreadcrumbをreturnする
-  if (!folderData[0].parent_relation.parent_folder) return breadcrumb;
+    // 親フォルダを取得
+    const parentFolderId = currentFolder.parent_relation?.parent_folder;
+    currentFolder = parentFolderId ? folderData.find((folder) => folder.id === parentFolderId) || null : null;
+  }
 
-  // 親フォルダのフォルダ名を取得しbreadcrumbのparentFolderNameに設定
-  const parentFolderData = await getFolderData(folderData[0].parent_relation.parent_folder);
-
-  if (!parentFolderData) return breadcrumb;
-
-  breadcrumb.parentFolderName.id = parentFolderData[0].id;
-  breadcrumb.parentFolderName.name = parentFolderData[0].name;
-  // 親フォルダがない場合はbreadcrumbをreturnする
-  if (!parentFolderData[0].parent_relation.parent_folder) return breadcrumb;
-
-  // さらに親フォルダのフォルダ名を取得しbreadcrumbのgrandParentFolderNameに設定
-  const grandParentFolderData = await getFolderData(parentFolderData[0].parent_relation.parent_folder);
-
-  if (!grandParentFolderData) return breadcrumb;
-
-  breadcrumb.grandParentFolderName.id = grandParentFolderData[0].id;
-  breadcrumb.grandParentFolderName.name = grandParentFolderData[0].name;
-  // 親フォルダがない場合はbreadcrumbをreturnする
-  if (!grandParentFolderData[0].parent_relation.parent_folder) return breadcrumb;
-
-  return breadcrumb;
+  return breadcrumbArray;
 };
