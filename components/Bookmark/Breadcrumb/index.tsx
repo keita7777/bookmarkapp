@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
 
 type BreadcrumbItem = { id: string; name: string };
@@ -16,14 +17,14 @@ const Breadcrumb = ({ breadcrumbData }: Props) => {
         {breadcrumbData &&
           breadcrumbData.map((item, index, array) => (
             <li key={item.id} className="flex justify-center items-center">
-              <a
+              <Link
                 href={item.id}
                 className={`underline hover:no-underline ${
                   index === array.length - 1 && "no-underline pointer-events-none"
                 }`}
               >
                 {item.name}
-              </a>
+              </Link>
               {index < array.length - 1 && <IoIosArrowForward className="mx-2" />}
             </li>
           ))}
