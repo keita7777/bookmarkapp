@@ -88,6 +88,9 @@ export const GET = async (req: NextRequest) => {
           include: {
             memo: true,
           },
+          orderBy: {
+            updated_at: "desc",
+          },
           take: pageSize,
           skip: page !== 1 ? (page - 1) * 6 : undefined,
         });
