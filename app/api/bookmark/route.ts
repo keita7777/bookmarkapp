@@ -52,13 +52,29 @@ export const GET = async (req: NextRequest) => {
       const bookmarkCount = await prisma.bookmarks.count({
         where: {
           user_id: userId,
-          title: {
-            contains: query ? query : undefined,
-          },
           folder_id: {
             // folderIdがある場合は子フォルダ、孫フォルダを含めて取得する
             in: folderId ? resultArray : undefined,
           },
+          OR: [
+            {
+              title: {
+                contains: query ? query : undefined,
+              },
+            },
+            {
+              description: {
+                contains: query ? query : undefined,
+              },
+            },
+            {
+              memo: {
+                memo: {
+                  contains: query ? query : undefined,
+                },
+              },
+            },
+          ],
         },
       });
 
@@ -86,9 +102,25 @@ export const GET = async (req: NextRequest) => {
               // folderIdがある場合は子フォルダ、孫フォルダを含めて取得する
               in: folderId ? resultArray : undefined,
             },
-            title: {
-              contains: query ? query : undefined,
-            },
+            OR: [
+              {
+                title: {
+                  contains: query ? query : undefined,
+                },
+              },
+              {
+                description: {
+                  contains: query ? query : undefined,
+                },
+              },
+              {
+                memo: {
+                  memo: {
+                    contains: query ? query : undefined,
+                  },
+                },
+              },
+            ],
           },
           include: {
             memo: true,
