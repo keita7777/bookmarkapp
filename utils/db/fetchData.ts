@@ -2,6 +2,8 @@
 
 import { Level } from "@prisma/client";
 import { auth } from "../auth/auth";
+import { BookmarkWithMemo } from "@/types/bookmarkType";
+import { BreadcrumbItem } from "@/types/breadcrumbType";
 
 // sessionからユーザーIDを取得
 const getUserId = async () => {
@@ -42,6 +44,11 @@ export const getFolderData = async (id?: string) => {
 
 // ブックマークデータを取得する処理
 // 引数がない場合は全件、ある場合は特定のブックマークを取得する
+interface BookmarkData {
+  bookmarks: BookmarkWithMemo[];
+  breadcrumbData: BreadcrumbItem[];
+}
+
 export const getBookmarkData = async ({
   folderId,
   bookmarkId,
@@ -52,7 +59,7 @@ export const getBookmarkData = async ({
   bookmarkId?: string;
   page?: number;
   query?: string;
-}) => {
+}): Promise<BookmarkData | null> => {
   const params = new URLSearchParams();
   if (folderId) params.append("folderId", folderId);
   if (bookmarkId) params.append("bookmarkId", bookmarkId);
@@ -85,7 +92,11 @@ export const getBookmarkData = async ({
   }
 
   const data = await res.json();
-  return data.bookmarks;
+
+  return {
+    bookmarks: data.bookmarks,
+    breadcrumbData: data.breadcrumbData,
+  };
 };
 
 // ブックマークを新規作成する処理
