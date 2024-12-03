@@ -12,7 +12,7 @@ export default async function Home({ searchParams }: { searchParams: { page: str
   return (
     <>
       <BookmarkList page={page} query={query} />
-      <Pagenation bookmarkCount={bookmarkCount} currentPage={page} query={query} />
+      <Pagenation bookmarkCount={bookmarkCount} currentPage={page} />
     </>
   );
 }

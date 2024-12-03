@@ -28,7 +28,7 @@ export default async function BookmarksByFolderPage({
     <>
       <Breadcrumb id={params.id} />
       <BookmarkList folderId={params.id} page={page} query={query} />
-      <Pagenation bookmarkCount={bookmarkCount} currentPage={page} query={query} />
+      <Pagenation bookmarkCount={bookmarkCount} currentPage={page} />
     </>
   );
 }
