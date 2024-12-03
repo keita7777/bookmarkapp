@@ -59,7 +59,7 @@ export const getBookmarkData = async ({
   bookmarkId?: string;
   page?: number;
   query?: string;
-}): Promise<BookmarkData | null> => {
+}): Promise<BookmarkData | undefined> => {
   const params = new URLSearchParams();
   if (folderId) params.append("folderId", folderId);
   if (bookmarkId) params.append("bookmarkId", bookmarkId);
@@ -69,7 +69,7 @@ export const getBookmarkData = async ({
   const userId = await getUserId();
   if (!userId) {
     console.error("ユーザーが見つかりません");
-    return null;
+    return undefined;
   }
 
   const res = await fetch(
@@ -88,7 +88,7 @@ export const getBookmarkData = async ({
 
   if (!res.ok) {
     console.error("ブックマークデータの取得に失敗しました", res.statusText);
-    return null;
+    return undefined;
   }
 
   const data = await res.json();
