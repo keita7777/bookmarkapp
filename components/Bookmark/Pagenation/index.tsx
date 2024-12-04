@@ -53,7 +53,7 @@ const Pagenation = ({ bookmarkCount, currentPage }: Props) => {
   return (
     <>
       {pageCount > 1 ? (
-        <div className="flex justify-center items-center my-4">
+        <div className="flex justify-center items-center mt-16 mb-4">
           <ol className="flex gap-4 text-xl">
             {pageNumbers.map((page, index) => (
               <li key={index}>

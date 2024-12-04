@@ -22,7 +22,7 @@ export default async function BookmarkLayout({
     <div className="flex flex-col md:flex-row h-full min-h-screen">
       <OpenMenuProvider>
         <Header />
-        <main className="flex-1 p-4">{children}</main>
+        <main className="flex-1 p-6">{children}</main>
       </OpenMenuProvider>
     </div>
   );
