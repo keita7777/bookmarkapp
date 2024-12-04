@@ -33,9 +33,9 @@ const BookmarkCard = async ({ bookmark, breadcrumb }: Props) => {
           rel="noopener noreferrer"
           className="relative w-full xl:w-[300px] h-[300px] xl:h-[200px]"
         >
-          <Image src={bookmark.image || noImage} fill alt="画像" />
+          <Image src={bookmark.image || noImage} fill sizes="(max-width: 1280px) 100vw, 33vw" alt="画像" />
         </a>
-        <div className="flex flex-col gap-2 w-full xl:ml-5 break-words overflow-hidden">
+        <div className="flex flex-col gap-2 w-full xl:ml-5 break-all">
           <h2 className="text-xl font-bold">{bookmark.title}</h2>
 
           <p className="text-gray-600">{bookmark.description}</p>

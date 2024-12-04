@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { FolderWithRelation } from "@/types/folderType";
 import { createBookmark, updateBookmark } from "@/utils/db/fetchData";
 import { BookmarkWithMemo } from "@/types/bookmarkType";
+import Loading from "@/components/Loading";
 
 type Props = {
   urlData: {
@@ -159,7 +160,7 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
   };
 
   if (!isReady) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -174,7 +175,13 @@ const BookmarkSubmit = ({ urlData, folderData, bookmarkData }: Props) => {
       )}
       <div className="flex justify-center flex-col xl:flex-row items-start gap-4">
         <div className="relative w-full xl:w-[400px] h-[300px] xl:h-[250px]">
-          <Image src={imageSrc} fill alt="画像" onError={() => setImageSrc(noImage)} />
+          <Image
+            src={imageSrc}
+            fill
+            alt="画像"
+            sizes="(max-width: 1280px) 100vw, 33vw"
+            onError={() => setImageSrc(noImage)}
+          />
         </div>
         <div className="flex flex-col gap-2 flex-1 w-full">
           <label htmlFor="" className="text-xl font-bold">
