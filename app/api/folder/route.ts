@@ -22,6 +22,9 @@ export const GET = async (req: NextRequest) => {
       include: {
         parent_relation: true,
       },
+      orderBy: {
+        created_at: "asc",
+      },
     });
 
     return NextResponse.json({ message: "取得完了", folders }, { status: 200 });
