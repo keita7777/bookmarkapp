@@ -10,6 +10,7 @@ import { FolderWithRelation } from "@/types/folderType";
 import { createPortal } from "react-dom";
 import DeleteModal from "../../DeleteModal";
 import { useState } from "react";
+import styles from "./FolderItem.module.css";
 
 type Props = {
   folder: FolderWithRelation;
@@ -21,7 +22,10 @@ type Props = {
 const FolderItem = ({ folder, folderData, isSubFolderVisible, toggleFolder }: Props) => {
   // URLからIDを取得、folder.idと一致する場合にスタイルを変更する
   const path = usePathname();
+  // フォルダページの場合
   const folderPath = path.split("/")[1];
+  // フォルダ編集ページの場合
+  const folderEditPath = path.split("/")[2];
 
   const { openMenuId, setOpenMenuId } = useOpenMenu();
 
@@ -34,8 +38,10 @@ const FolderItem = ({ folder, folderData, isSubFolderVisible, toggleFolder }: Pr
         <GrBottomCorner size={30} className="mb-2 text-white rotate-90" />
       )}
       <div
-        className={` rounded flex justify-between items-stretch flex-1  hover:bg-blue-100 ${
-          folderPath === folder.id ? "bg-blue-100" : "bg-white"
+        className={` rounded flex justify-between items-stretch flex-1  hover:bg-blue-100 ${styles.folderItemShadow} ${
+          folderPath === folder.id || folderEditPath === folder.id || openMenuId === folder.id
+            ? "bg-blue-100"
+            : "bg-white"
         }`}
       >
         <div className="flex items-stretch flex-1">

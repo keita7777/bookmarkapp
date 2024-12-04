@@ -19,7 +19,7 @@ const BookmarkList = async ({ folderId, page, query }: Props) => {
   return (
     <>
       {bookmarks.length > 0 ? (
-        <ul className="grid 2xl:grid-cols-2 xl:grid-cols-1 gap-4">
+        <ul className="grid 2xl:grid-cols-2 xl:grid-cols-1 gap-6">
           {bookmarks.map((bookmark) => {
             const matchedBreadcrumb = breadcrumbData.find((breadcrumb) => breadcrumb.bookmarkId === bookmark.id);
             return <BookmarkCard key={bookmark.id} bookmark={bookmark} breadcrumb={matchedBreadcrumb} />;
