@@ -39,14 +39,15 @@ URLを入力すると、自動的にサイト情報（タイトル、サムネ�
 ![delete-folder](https://github.com/user-attachments/assets/a1af20ea-ab56-466f-9cb5-942491d29519)
 
 
-# 未実装の機能
-- 認証機能
-- ブックマーク検索機能
+# 今後実装予定の機能
 - 並べ替え機能
+- おすすめサイト投稿機能
+- パスワードリセット
+- OAuth認証
+
 
 # ワイヤーフレーム
-- [PC表示](https://www.figma.com/design/Q9HhtGHjvg4b2qsnfFTqM5/%E3%83%96%E3%83%83%E3%82%AF%E3%83%9E%E3%83%BC%E3%82%AF%E7%AE%A1%E7%90%86%E3%82%A2%E3%83%97%E3%83%AA?node-id=43-2033&t=ZJQgamM2Yzj3qvs4-1)
-- [SP表示](https://www.figma.com/design/Q9HhtGHjvg4b2qsnfFTqM5/%E3%83%96%E3%83%83%E3%82%AF%E3%83%9E%E3%83%BC%E3%82%AF%E7%AE%A1%E7%90%86%E3%82%A2%E3%83%97%E3%83%AA?node-id=41-1065)
+- [ワイヤーフレーム](https://www.figma.com/design/wi0Wi6SLDgZb4hL3GgyXRO/%E3%83%96%E3%83%83%E3%82%AF%E3%83%9E%E3%83%BC%E3%82%AF%E7%AE%A1%E7%90%86%E3%82%A2%E3%83%97%E3%83%AA?node-id=6-2129&m=dev&t=1WR5yw5UkRXumdgw-1)
 
 
 # テーブル定義書
