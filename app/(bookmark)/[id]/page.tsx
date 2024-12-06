@@ -4,9 +4,9 @@
 import Breadcrumb from "@/components/Bookmark/Breadcrumb";
 import BookmarkList from "@/components/Bookmark/List";
 import Pagenation from "@/components/Bookmark/Pagenation";
-import { Folder } from "@/DummtData/types/folderType";
 import { getBreadcrumbPath } from "@/utils/common/breadcrumbs";
 import { countBookmarks, getFolderData } from "@/utils/db/fetchData";
+import { Folders } from "@prisma/client";
 import { notFound } from "next/navigation";
 
 export default async function BookmarksByFolderPage({
@@ -21,7 +21,7 @@ export default async function BookmarksByFolderPage({
   const bookmarkCount = await countBookmarks(params.id, query);
 
   const folderData = await getFolderData();
-  const folderIds = folderData.map((item: Folder) => item.id);
+  const folderIds = folderData.map((item: Folders) => item.id);
 
   // パンくずデータを用意
   let breadcrumbData = null;
